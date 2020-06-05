@@ -1,30 +1,48 @@
-let money;
-let income;
-let addExpenses;
-let deposit;
-let mission;
-let period;
+let num = 266219;
 
-money = 5000;
-income = 'freelance';
-addExpenses = 'Internet, transport, service';
-deposit = true;
-mission = 100000;
-period = 12;
+function multiplyDigits(inputNumber) {
+    let convertNumber = Math.abs(inputNumber);
+    let product = 1;
 
-console.log('data type of variable "money": ' + typeof money);
-console.log('data type of variable "income": ' + typeof income);
-console.log('data type of variable "deposit": ' + typeof deposit);
-console.log('length of string "addExpenses": ' + addExpenses.length);
-console.log(`The period is ${period} months`);
-console.log(`The goal is earning ${mission} USD`);
+    if (Number.isInteger(convertNumber)) {
 
-addExpenses = addExpenses.toLocaleLowerCase();
-addExpenses = addExpenses.split(', ');
+        for (let i = 0; convertNumber > 0; i++) {
+            product = (convertNumber % 10) * product;
+            convertNumber = Math.floor(convertNumber / 10);
+        }
+        return product;
+    }
+    else {
+        return `You entered a real number ${num}. Please, enter integer number`;
+    }
+}
 
-console.log(addExpenses);
+function exponentiation(inputNumber) {
+    if (isNaN(inputNumber)) {
+        return `Unable exponentiation of product digits ${num}. Please, enter integer number`;
+    }
+    else {
+        inputNumber = (inputNumber) ** 3;
+        return inputNumber;
+    }
+}
 
-let budgetDay;
-budgetDay = money / 30;
+function printFirstTwoDigits(inputNumber) {
+    if (isNaN(inputNumber)) {
+        return `Unable to print first two digits of ${num}. Please, enter integer number`;
+    }
+    else if (inputNumber >= 10) {
+        inputNumber = inputNumber.toString().slice(0,2);
+        return inputNumber;
+    }
+    else {
+        return `Unable to print the result because the number is single-valued`;
+    }
+}
 
-console.log(budgetDay.toFixed(2));
+let processedNumber = num;
+processedNumber = multiplyDigits(processedNumber);
+processedNumber = exponentiation(processedNumber);
+processedNumber = printFirstTwoDigits(processedNumber);
+
+console.log(processedNumber);
