@@ -1,12 +1,23 @@
-let money;
-let income;
-let addExpenses;
-let deposit;
-let mission;
-let period;
+let money = 5000;
+let income = 'freelance';
+let addExpenses = 'Internet, transport, service';
+let deposit = true;
+let mission = 100000;
+let period = 12;
 
-let message;
+console.log('data type of variable "money": ' + typeof money);
+console.log('data type of variable "income": ' + typeof income);
+console.log('data type of variable "deposit": ' + typeof deposit);
+console.log('length of string "addExpenses": ' + addExpenses.length);
+console.log(`The period is ${period} months`);
+console.log(`The goal is earning ${mission} USD`);
 
-message = "Сообщение с любым текстом";
-alert(message);
-console.log(message);
+addExpenses = addExpenses.toLocaleLowerCase();
+addExpenses = addExpenses.split(', ');
+
+console.log(addExpenses);
+
+let budgetDay;
+budgetDay = money / 30;
+
+console.log(budgetDay.toFixed(2));
