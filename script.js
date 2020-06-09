@@ -8,9 +8,14 @@ let deposit = confirm('Есть ли у вас депозит в банке?');
 let mission = 100000;
 let period = 12;
 
-console.log('Тип переменной "money": ' + typeof money);
-console.log('Тип переменной "income": ' + typeof income);
-console.log('Тип переменной "deposit": ' + typeof deposit);
+let showTypeOf = function (data) {
+    console.log(`${data} это тип ` + typeof data);
+};
+
+showTypeOf(money);
+showTypeOf(income);
+showTypeOf(deposit);
+
 console.log('Длина строки "addExpenses": ' + addExpenses.length);
 console.log(`Период в месяцах равен: ${period}`);
 console.log(`Цель: заработать ${mission} ₽`);
@@ -33,14 +38,18 @@ console.log('Месяцев до достижения цели: ' + reachingMont
 let budgetDay = Math.floor(budgetMonth / 30);
 console.log('Ежедневный бюджет: ' + budgetDay + ' ₽');
 
-if (budgetDay === 0) {
-    console.log('У вас нулевой доход');
-} else if (budgetDay > 0 && budgetDay < 600) {
-    console.log('К сожалению у вас уровень дохода ниже среднего');
-} else if (budgetDay >= 600 && budgetDay < 1200) {
-    console.log('У вас средний уровень дохода');
-} else if (budgetDay >= 1200) {
-    console.log('У вас высокий уровень дохода');
-} else {
-    console.log('Что-то пошло не так');
-}
+let getStatusIncome = function () {
+    if (budgetDay === 0) {
+        return ('У вас нулевой доход');
+    } else if (budgetDay > 0 && budgetDay < 600) {
+        return ('К сожалению у вас уровень дохода ниже среднего');
+    } else if (budgetDay >= 600 && budgetDay < 1200) {
+        return ('У вас средний уровень дохода');
+    } else if (budgetDay >= 1200) {
+        return ('У вас высокий уровень дохода');
+    } else {
+        return ('Что-то пошло не так');
+    }
+};
+
+console.log(getStatusIncome());
