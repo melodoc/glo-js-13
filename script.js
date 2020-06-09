@@ -29,14 +29,32 @@ let mandatoryAmount1 = prompt('Во сколько это обойдется?', 
 let mandatoryExpense2 = prompt('Введите вторую обязательную статью расходов', 'Коммунальные услуги');
 let mandatoryAmount2 = prompt('Во сколько это обойдется?', 4000);
 
-let budgetMonth = Number(money) - Number(mandatoryAmount1) - Number(mandatoryAmount2);
-console.log('Месячный бюджет: ' + budgetMonth + ' ₽');
+let getExpensesMonth = function() {
+    let mandatoryAmountTotal = Number(mandatoryAmount1) + Number(mandatoryAmount2);
+    return mandatoryAmountTotal;
+};
 
-let reachingMonthAmount = Math.ceil(mission / budgetMonth);
+let mandatoryAmount = getExpensesMonth();
+
+let getAccumulatedMonth = function() {
+    let remainingMonthSavings = Number(money) - Number(mandatoryAmount1) - Number(mandatoryAmount2);
+    return remainingMonthSavings;
+};
+
+let accumulatedMonth = getAccumulatedMonth();
+
+let getTargetMonth = function() {
+    let periodOfTarget = Math.ceil(mission / accumulatedMonth);
+    return periodOfTarget;
+};
+
+let reachingMonthAmount = getTargetMonth();
+let budgetDay = accumulatedMonth / 30;
+
+console.log('Сумма всех обязательных расходов за месяц: ' + mandatoryAmount + ' ₽');
+console.log('Месячный бюджет: ' + accumulatedMonth + ' ₽');
 console.log('Месяцев до достижения цели: ' + reachingMonthAmount);
-
-let budgetDay = Math.floor(budgetMonth / 30);
-console.log('Ежедневный бюджет: ' + budgetDay + ' ₽');
+console.log('Ежедневный бюджет: ' + Math.floor(budgetDay) + ' ₽');
 
 let getStatusIncome = function () {
     if (budgetDay === 0) {
