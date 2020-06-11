@@ -1,9 +1,24 @@
 'use strict';
 
-let money = prompt('Ваш месячный доход?', 30000),
-    income = 'Фриланс',
+let isNumber = function (n) {
+    return !isNaN(parseFloat(n)) && isFinite(n);
+};
+
+let money;
+
+//originally named start   
+
+let getMonthlyIncome = function () {
+    do {
+        money = prompt('Ваш месячный доход?', 30000);
+    } while (!isNumber(money));
+};
+
+getMonthlyIncome();
+
+let income = 'Фриланс',
     addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую',
-    'Интернет, транспорт, коммунальные услуги'),
+        'Интернет, транспорт, коммунальные услуги'),
     deposit = confirm('Есть ли у вас депозит в банке?'),
     mission = 100000,
     period = 12;
@@ -26,27 +41,36 @@ console.log('Статьи расхода: ' + addExpenses);
 
 let mandatoryExpenses = [];
 
-let getExpensesMonth = function() {
+let getExpensesMonth = function () {
     let mandatoryAmountTotal = 0;
 
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 2; i++) {
         mandatoryExpenses[i] = prompt('Введите обязательную статью расходов', 'Еда');
-        mandatoryAmountTotal += +prompt('Во сколько это обойдется?', 3000);
+
+        let mandatoryAmountInput;
+            do {
+                mandatoryAmountInput = prompt('Во сколько это обойдется?', 3000);
+            } while (!isNumber(mandatoryAmountInput));
+            mandatoryAmountTotal += +mandatoryAmountInput;
     }
     return mandatoryAmountTotal;
 };
 
 let expensesAmount = getExpensesMonth();
 
-let getAccumulatedMonth = function() {
+let getAccumulatedMonth = function () {
     let remainingMonthSavings = Number(money) - Number(expensesAmount);
     return remainingMonthSavings;
 };
 
 let accumulatedMonth = getAccumulatedMonth();
 
-let getTargetMonth = function() {
+let getTargetMonth = function () {
     let periodOfTarget = Math.ceil(mission / accumulatedMonth);
+
+    if (periodOfTarget <= 0 || !isFinite(periodOfTarget)) {
+        return 'Цель не будет достигнута';
+    }
     return periodOfTarget;
 };
 
