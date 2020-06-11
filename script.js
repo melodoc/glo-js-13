@@ -1,12 +1,12 @@
 'use strict';
 
-let money = prompt('Ваш месячный доход?', 30000);
-let income = 'Фриланс';
-let addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую',
-    'Интернет, транспорт, коммунальные услуги');
-let deposit = confirm('Есть ли у вас депозит в банке?');
-let mission = 100000;
-let period = 12;
+let money = prompt('Ваш месячный доход?', 30000),
+    income = 'Фриланс',
+    addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую',
+    'Интернет, транспорт, коммунальные услуги'),
+    deposit = confirm('Есть ли у вас депозит в банке?'),
+    mission = 100000,
+    period = 12;
 
 let showTypeOf = function (data) {
     console.log(`${data} это тип ` + typeof data);
@@ -24,20 +24,22 @@ addExpenses = addExpenses.toLocaleLowerCase();
 addExpenses = addExpenses.split(', ');
 console.log('Статьи расхода: ' + addExpenses);
 
-let mandatoryExpense1 = prompt('Введите первую обязательную статью расходов', 'Еда');
-let mandatoryAmount1 = prompt('Во сколько это обойдется?', 3000);
-let mandatoryExpense2 = prompt('Введите вторую обязательную статью расходов', 'Коммунальные услуги');
-let mandatoryAmount2 = prompt('Во сколько это обойдется?', 4000);
+let mandatoryExpenses = [];
 
 let getExpensesMonth = function() {
-    let mandatoryAmountTotal = Number(mandatoryAmount1) + Number(mandatoryAmount2);
+    let mandatoryAmountTotal = 0;
+
+    for (let i = 0; i < 4; i++) {
+        mandatoryExpenses[i] = prompt('Введите обязательную статью расходов', 'Еда');
+        mandatoryAmountTotal += +prompt('Во сколько это обойдется?', 3000);
+    }
     return mandatoryAmountTotal;
 };
 
-let mandatoryAmount = getExpensesMonth();
+let expensesAmount = getExpensesMonth();
 
 let getAccumulatedMonth = function() {
-    let remainingMonthSavings = Number(money) - Number(mandatoryAmount1) - Number(mandatoryAmount2);
+    let remainingMonthSavings = Number(money) - Number(expensesAmount);
     return remainingMonthSavings;
 };
 
@@ -51,7 +53,7 @@ let getTargetMonth = function() {
 let reachingMonthAmount = getTargetMonth();
 let budgetDay = accumulatedMonth / 30;
 
-console.log('Сумма всех обязательных расходов за месяц: ' + mandatoryAmount + ' ₽');
+console.log('Сумма всех обязательных расходов за месяц: ' + expensesAmount + ' ₽');
 console.log('Месячный бюджет: ' + accumulatedMonth + ' ₽');
 console.log('Месяцев до достижения цели: ' + reachingMonthAmount);
 console.log('Ежедневный бюджет: ' + Math.floor(budgetDay) + ' ₽');
