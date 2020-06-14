@@ -4,14 +4,11 @@ let isNumber = function (number) {
     return !isNaN(parseFloat(number)) && isFinite(number);
 };
 
-let randomInteger = function (min, max) {
-    let rand = Math.floor(min + Math.random() * (max + 1 - min));
-    return rand;
-};
-
 let guessRandomNumber = function () {
 
-    let quizNumber = randomInteger(1, 100);
+    let min = 1;
+    let max = 100;
+    let quizNumber = Math.floor(min + Math.random() * (max + 1 - min));
 
     let checkQuizInput = function () {
         let quizInput = +prompt('Угадай чисто от 1 до 100', '100');
