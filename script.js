@@ -12,6 +12,10 @@ let isString = function (string) {
     }
 };
 
+let capitalize = function (string) {
+    return string.replace(/(^|\s)\S/g, function(a) {return a.toUpperCase()});   
+};
+
 let money,
     start = function () {
         do {
@@ -57,7 +61,7 @@ let appData = {
 
         let addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую',
             'Интернет, транспорт, коммунальные услуги');
-        appData.addExpenses = addExpenses.toLocaleLowerCase().split(', ');
+        appData.addExpenses = capitalize(addExpenses).split(', ');
         appData.deposit = confirm('Есть ли у вас депозит в банке?');
 
         for (let i = 0; i < 2; i++) {
@@ -137,6 +141,7 @@ console.log('Сумма всех обязательных расходов за 
 appData.calcBudget();
 console.log('Месяцев до достижения цели: ' + appData.getTargetMonth());
 console.log(appData.getStatusIncome());
+console.log(appData.addExpenses);
 
 let printAppData = function () {
     console.log('Наша программа включает в себя данные: ');
