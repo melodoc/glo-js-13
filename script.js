@@ -32,8 +32,8 @@ let appData = {
     getUserInput: function () {
         let addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую',
             'Интернет, транспорт, коммунальные услуги');
-            appData.addExpenses = addExpenses.toLocaleLowerCase().split(', ');
-            appData.deposit = confirm('Есть ли у вас депозит в банке?');
+        appData.addExpenses = addExpenses.toLocaleLowerCase().split(', ');
+        appData.deposit = confirm('Есть ли у вас депозит в банке?');
 
         for (let i = 0; i < 2; i++) {
             let expensesKey = prompt('Введите обязательную статью расходов', 'Еда');
@@ -93,3 +93,12 @@ console.log('Сумма всех обязательных расходов за 
 appData.calcBudget();
 console.log('Месяцев до достижения цели: ' + appData.getTargetMonth());
 console.log(appData.getStatusIncome());
+
+let printAppData = function () {
+    console.log('Наша программа включает в себя данные: ');
+    for (let key in appData) {
+        console.log(key + ' is ' + appData[key]);
+    }
+};
+
+printAppData();
