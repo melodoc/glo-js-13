@@ -24,26 +24,35 @@ let appData = {
     budgetMonth: 0,
     expensesMonth: 0,
     deposit: false,
+    percentDeposit: 0,
+    moneyDeposit: 0,
     mission: 100000,
     period: 12,
 
     //originally named asking
 
     getUserInput: function () {
+
+        if (confirm('Есть ли у вас дополнительный заработок?')) {
+            let itemIncome = prompt('Какой у вас дополнительный заработок?', 'Репититор');
+            let cashIncome = prompt('Сколько зарабатываете в месяц на этом?', 10000);
+            appData.income[itemIncome] = cashIncome;            
+        }
+
         let addExpenses = prompt('Перечислите возможные расходы за рассчитываемый период через запятую',
             'Интернет, транспорт, коммунальные услуги');
         appData.addExpenses = addExpenses.toLocaleLowerCase().split(', ');
         appData.deposit = confirm('Есть ли у вас депозит в банке?');
 
         for (let i = 0; i < 2; i++) {
-            let expensesKey = prompt('Введите обязательную статью расходов', 'Еда');
+            let itemExpenses = prompt('Введите обязательную статью расходов', 'Еда');
 
-            let expensesValue;
+            let cashExpenses;
             do {
-                expensesValue = prompt('Во сколько это обойдется?', 3000);
-            } while (!isNumber(expensesValue));
+                cashExpenses = prompt('Во сколько это обойдется?', 3000);
+            } while (!isNumber(cashExpenses));
 
-            appData.expenses[expensesKey] = +expensesValue;
+            appData.expenses[itemExpenses] = +cashExpenses;
         }
     },
 
@@ -85,6 +94,17 @@ let appData = {
             return ('Что-то пошло не так');
         }
     },
+
+    getInfoDeposit: function () {
+        if (appData.deposit) {
+            appData.percentDeposit = prompt('Какой годовой процент?', '10');
+            appData.moneyDeposit = prompt('Какая первоначальная заложенная сумма?', 10000);
+        }
+    },
+
+    calcSavedMoney: function () {
+        return appData.budgetMonth * appData.period;
+    }
 };
 
 appData.getUserInput();
