@@ -20,6 +20,7 @@ let appData = {
     addIncome: [],
     expenses: {},
     addExpenses: [],
+    expensesAmountTotal: 0,
     budget: money,
     budgetDay: 0,
     budgetMonth: 0,
@@ -37,21 +38,18 @@ let appData = {
             appData.deposit = confirm('Есть ли у вас депозит в банке?');
     },
     
-    getExpensesMonth: function () {
-        
-        let mandatoryExpenses = [];
-        let mandatoryAmountTotal = 0;
-    
+    getExpensesMonth: function () {        
+   
         for (let i = 0; i < 2; i++) {
-            mandatoryExpenses[i] = prompt('Введите обязательную статью расходов', 'Еда');
+            appData.expenses.expensesKey = prompt('Введите обязательную статью расходов', 'Еда');
     
-            let mandatoryAmountInput;
+            let expensesValue;
             do {
-                mandatoryAmountInput = prompt('Во сколько это обойдется?', 3000);
-            } while (!isNumber(mandatoryAmountInput));
-            mandatoryAmountTotal += +mandatoryAmountInput;
+                expensesValue = prompt('Во сколько это обойдется?', 3000);
+            } while (!isNumber(expensesValue));
+            appData.expensesAmountTotal += +expensesValue;
         }
-        return mandatoryAmountTotal;
+        return appData.expensesAmountTotal;
     },
 
     getAccumulatedMonth: function () {
