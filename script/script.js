@@ -23,6 +23,39 @@ let money,
         } while (!isNumber(money));
     };
 
+let calcButton = document.getElementById('start');
+
+let incomeAddButton = document.getElementsByTagName('button')[0];
+let expensesAddButton = document.getElementsByTagName('button')[1];
+
+let depositCheckbox = document.querySelector('#deposit-check');
+
+// fields
+
+let addIncomes = document.querySelectorAll('.additional_income-item');
+
+let budgetMonth = document.querySelector('.budget_month-value');
+
+let budgetDay = document.querySelector('.budget_day-value');
+let expensesMonth = document.querySelector('.expenses_month-value');
+let additionalIncome = document.querySelector('.additional_income-value');
+let additionalExpenses = document.querySelector('.additional_expenses-value');
+let incomePeriod = document.querySelector('.income_period-value');
+let targetMonth =  document.querySelector('.target_month-value');
+
+let salaryAmount = document.querySelector('.salary-amount');
+let incomeTitle = document.querySelector('.income-items > .income-title');
+let incomeAmount = document.querySelector('.income-items > .income-amount');
+
+let expensesTitle = document.querySelector('.expenses-items > .expenses-title');
+let expensesAmount = document.querySelector('.expenses-items > .expenses-amount');
+
+let additionalExpensesTitle = document.querySelector('.additional_expenses-item');
+
+// range
+
+let periodRange = document.querySelector('[type="range"]');
+
 start();
 
 let appData = {
@@ -150,4 +183,4 @@ let printAppData = function () {
     }
 };
 
-printAppData();
+//printAppData();
