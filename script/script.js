@@ -39,12 +39,12 @@ let budgetDay = document.querySelector('.budget_day-value'),
     targetAmount = document.querySelector('.target-amount'),
 
     salaryAmount = document.querySelector('.salary-amount'),
-    incomeTitle = document.querySelector('.income-title'),
-
-    expensesTitle = document.querySelector('.expenses-title'),
+    
     expensesItems = document.querySelectorAll('.expenses-items'),
-    incomeItem = document.querySelectorAll('.income-items');
-
+    expensesTitle = document.querySelector('.expenses-title'),
+    
+    incomeItems = document.querySelectorAll('.income-items'),
+    incomeTitle = document.querySelector('.income-title');
 // range
 
 let periodSelect = document.querySelector('.period-select');
@@ -120,24 +120,37 @@ let appData = {
         });
     },
 
-    getIncome: function() { //сделать как в getexpenses
-        if (confirm('Есть ли у вас дополнительный заработок?')) {
-            let itemIncome;
-            do {
-                itemIncome = prompt('Какой у вас дополнительный заработок?', 
-                'Репититор');
-            } while (!isString(itemIncome));
-            
-            let cashIncome;
-            do {
-                cashIncome = prompt('Сколько зарабатываете в месяц на этом?', 10000);
-            } while (!isNumber(cashIncome));
-            
-            appData.income[itemIncome] = cashIncome;        
-        }
+    addIncomeBlock: function() {
 
-        for (let key in appData.income) {
-            appData.incomeMonths += +appData.income[key];
+        let cloneIncomeItem = incomeItems[0].cloneNode(true);
+        incomeItems[0].parentNode.insertBefore(cloneIncomeItem, 
+            incomePlus);
+
+            incomeItems = document.querySelectorAll('.income-items');
+
+        if (incomeItems.length === 3) {
+            incomePlus.style.display = 'none';
+        }
+    },
+
+    getIncome: function () {
+        incomeItems.forEach(function (item) {
+            let itemIncome = item.querySelector('.income-title').value;
+            let cashIncome = item.querySelector('.income-amount').value;
+
+
+            if (!isString(itemIncome) || (!isNumber(cashIncome))) {
+                alert('Введите корректные данные в Дополнительный доход');
+                return;
+            }
+
+            if (itemIncome !== '' && cashIncome !== '') {
+                appData.addIncome[itemIncome] = cashIncome;
+            }
+        });
+
+        for (let key in appData.addIncome) {
+            appData.incomeMonths += +appData.addIncome[key];
         }
     },
 
@@ -181,8 +194,11 @@ let appData = {
     // originally named getBudget
 
     calcBudget: function () {
-        appData.budgetMonth = Number(appData.budget) + Number(appData.incomeMonths) - Number(appData.expensesMonth);
+        appData.budgetMonth = Number(appData.budget) + 
+        Number(appData.incomeMonths) - Number(appData.expensesMonth);
+
         appData.budgetDay = appData.budgetMonth / 30;
+        console.log('Доход за месяц ', appData.incomeMonths);
         console.log('Месячный бюджет: ', appData.budgetMonth);
         console.log('Ежедневный бюджет: ', appData.budgetDay);
     },
@@ -224,6 +240,8 @@ let appData = {
 
 startBtn.addEventListener('click', appData.start);
 expensesPlus.addEventListener('click', appData.addExpensesBlock);
+incomePlus.addEventListener('click', appData.addIncomeBlock);
+
 
 //console.log('Сумма всех обязательных расходов за месяц: ' + appData.expensesMonth + ' ₽');
 //console.log('Месяцев до достижения цели: ' + appData.getTargetMonth());
