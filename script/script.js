@@ -13,7 +13,7 @@ let isString = function (string) {
 };
 
 let startBtn = document.getElementById('start'),
-    plusBtn = document.getElementsByTagName('button'),
+    plusBtn = document.querySelectorAll('.btn_plus'),
     incomePlus = plusBtn[0],
     expensesPlus = plusBtn[1],
     addIncomes = document.querySelectorAll('.additional_income-item'),
@@ -43,12 +43,20 @@ let periodSelect = document.querySelector('.period-select'),
     periodAmount = document.querySelector('.period-amount'),
     incomePeriod = document.querySelector('.income_period-value');
 
+let cancelBtn = document.querySelector('#cancel');
+
+let inputText = document.querySelectorAll("input[type='text']");
+
+let itemExpenses = document.querySelector('.expenses-title').value;
+let cashExpenses = document.querySelector('.expenses-amount').value;
+
+
 let appData = {
     income: {},
-    incomeMonths: 0,
     addIncome: [],
     expenses: {},
     addExpenses: [],
+    incomeMonths: 0,
     expensesMonth: 0,
     budget: 0,
     budgetDay: 0,
@@ -60,14 +68,76 @@ let appData = {
     start: function () {
 
         this.budget = salaryAmount.value;
-        this.getExpenses();
-        this.getIncome();
-        this.getExpensesMonth();
-        this.getAddExpenses();
-        this.getAddIncome();
-        this.calcBudget();
+        appData.getExpenses();
+        appData.getIncome();
+        appData.getExpensesMonth();
+        appData.getAddExpenses();
+        appData.getAddIncome();
+        appData.calcBudget();
 
-        this.showResult();
+        appData.showResult();
+
+        startBtn.disabled = true;
+        startBtn.style.display = 'none';
+        
+        cancelBtn.disabled = false;
+        cancelBtn.style.display = 'block';
+
+        incomePlus.disabled = true;
+        expensesPlus.disabled = true;
+
+        let inputText = document.querySelectorAll("input[type='text']");
+
+        inputText.forEach(function (element) {
+            element.disabled = true;
+        });
+    },
+
+    reset() {
+
+        this.income = {};
+        this.addIncome = [];
+        this.expenses = {};
+        this.addExpenses = [];
+        this.incomeMonths = 0;
+        this.expensesMonth = 0;
+        this.budget = 0;
+        this.budgetDay = 0;
+        this.budgetMonth = 0;
+        this.deposit = false;
+        this.percentDeposit = 0;
+        this.moneyDeposit = 0;
+
+        incomePeriod.value = 0;
+        periodSelect.value = 1;
+        periodAmount.textContent = '1';
+
+        cancelBtn.style.display = 'none';
+        
+        startBtn.disabled = false;
+        startBtn.style.display = 'block';
+       
+        incomePlus.disabled = false;
+        expensesPlus.disabled = false;
+
+        inputText = document.querySelectorAll("input[type='text']");
+
+        inputText.forEach(function (element) {
+            element.disabled = false;
+            element.value = '';
+        });
+
+        for (let inputNumber = 1; inputNumber < incomeItems.length; inputNumber++) {
+            if (incomeItems.length > 1) {
+                incomeItems[inputNumber].remove();
+            }
+        }
+
+        for (let inputNumber = 1; inputNumber < expensesItems.length; inputNumber++) {
+            if (expensesItems.length > 1) {
+                expensesItems[inputNumber].remove();
+            }
+        }
     },
 
     checkStartBtn: function () {
@@ -187,7 +257,7 @@ let appData = {
             Number(this.incomeMonths) - Number(this.expensesMonth);
 
         this.budgetDay = this.budgetMonth / 30;
-        console.log('Доход за месяц ', this.incomeMonths);
+        console.log('Доп. доход за месяц ', this.incomeMonths);
         console.log('Месячный бюджет: ', this.budgetMonth);
         console.log('Ежедневный бюджет: ', this.budgetDay);
     },
@@ -225,6 +295,7 @@ window.onload = function () {
 
 salaryAmount.addEventListener('input', appData.checkStartBtn);
 startBtn.addEventListener('click', appData.start.bind(appData));
+cancelBtn.addEventListener('click', appData.reset.bind(appData));
 expensesPlus.addEventListener('click', appData.addExpensesBlock);
 incomePlus.addEventListener('click', appData.addIncomeBlock);
 periodSelect.addEventListener('input', appData.rangeHandler);
