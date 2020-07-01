@@ -135,13 +135,15 @@ AppData.prototype.reset = function () {
 
     for (let inputNumber = 1; inputNumber < incomeItems.length; inputNumber++) {
         if (incomeItems.length > 1) {
-            incomeItems[inputNumber].remove();
+            incomeItems[inputNumber].parentNode.removeChild(incomeItems[inputNumber]);
+            incomePlus.style.display = 'block';
         }
     }
 
     for (let inputNumber = 1; inputNumber < expensesItems.length; inputNumber++) {
         if (expensesItems.length > 1) {
-            expensesItems[inputNumber].remove();
+            expensesItems[inputNumber].parentNode.removeChild(expensesItems[inputNumber]);
+            expensesPlus.style.display = 'block';
         }
     }
 };
