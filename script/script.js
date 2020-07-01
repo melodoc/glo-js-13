@@ -133,18 +133,24 @@ AppData.prototype.reset = function () {
         element.value = '';
     });
 
-    for (let inputNumber = 1; inputNumber < incomeItems.length; inputNumber++) {
-        if (incomeItems.length > 1) {
-            incomeItems[inputNumber].parentNode.removeChild(incomeItems[inputNumber]);
-            incomePlus.style.display = 'block';
+    for (let i = 0; i < incomeItems.length; i++) {
+        if (i !== 0) {
+            incomeItems[i].remove();
         }
     }
 
-    for (let inputNumber = 1; inputNumber < expensesItems.length; inputNumber++) {
-        if (expensesItems.length > 1) {
-            expensesItems[inputNumber].parentNode.removeChild(expensesItems[inputNumber]);
-            expensesPlus.style.display = 'block';
+    for (let i = 0; i < expensesItems.length; i++) {
+        if (i !== 0) {
+            expensesItems[i].remove();
         }
+    }
+
+    if (incomeItems.length === 3) {
+        incomePlus.style.display = 'block';
+    }
+
+    if (expensesItems.length === 3) {
+        expensesPlus.style.display = 'block';
     }
 };
 
