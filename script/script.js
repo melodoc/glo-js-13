@@ -16,7 +16,7 @@ const startBtn = document.getElementById('start'),
     plusBtn = document.querySelectorAll('.btn_plus'),
     incomePlus = plusBtn[0],
     expensesPlus = plusBtn[1],
-    addIncomes = document.querySelectorAll('.additional_income-item'),
+    additionalIncomes = document.querySelectorAll('.additional_income-item'),
     depositCheck = document.querySelector('#deposit-check');
 
 const budgetDay = document.querySelector('.budget_day-value'),
@@ -99,8 +99,8 @@ class AppData {
 
         const inputText = document.querySelectorAll("input[type='text']");
 
-        inputText.forEach((element) => {
-            element.disabled = true;
+        inputText.forEach(item => {
+            item.disabled = true;
         });
     }
 
@@ -133,9 +133,9 @@ class AppData {
 
         inputText = document.querySelectorAll("input[type='text']");
 
-        inputText.forEach((element) => {
-            element.disabled = false;
-            element.value = '';
+        inputText.forEach(item => {
+            item.disabled = false;
+            item.value = '';
         });
 
         for (let i = 0; i < incomeItems.length; i++) {
@@ -176,7 +176,7 @@ class AppData {
         addIncome.value = this.addIncome.join(', ');
         targetMonth.value = Math.ceil(this.getTargetMonth());
         incomePeriod.value = this.calcPeriod();
-        periodSelect.addEventListener('change', function () {
+        periodSelect.addEventListener('change', () => {
             incomePeriod.value = _this.calcPeriod();
         });
     }
@@ -189,6 +189,11 @@ class AppData {
 
         expensesItems = document.querySelectorAll('.expenses-items');
 
+        const cloneExpensesItemInput = cloneExpensesItem.querySelectorAll('input');
+        cloneExpensesItemInput.forEach(item => {
+            item.value = '';
+        });
+
         if (expensesItems.length === 3) {
             expensesPlus.style.display = 'none';
         }
@@ -197,7 +202,7 @@ class AppData {
     getExpenses() {
         const _this = this;
 
-        expensesItems.forEach((item) => {
+        expensesItems.forEach(item => {
             const itemExpenses = item.querySelector('.expenses-title').value;
             const cashExpenses = item.querySelector('.expenses-amount').value;
 
@@ -220,6 +225,11 @@ class AppData {
 
         incomeItems = document.querySelectorAll('.income-items');
 
+        const cloneIncomeItemInput = cloneIncomeItem.querySelectorAll('input');
+        cloneIncomeItemInput.forEach(item => {
+            item.value = '';
+        });
+
         if (incomeItems.length === 3) {
             incomePlus.style.display = 'none';
         }
@@ -227,7 +237,7 @@ class AppData {
 
     getIncome() {
         const _this = this;
-        incomeItems.forEach((item) => {
+        incomeItems.forEach(item => {
             const itemIncome = item.querySelector('.income-title').value;
             const cashIncome = item.querySelector('.income-amount').value;
 
@@ -242,15 +252,15 @@ class AppData {
             }
         });
 
-        for (let key in _this.addIncome) {
+        for (const key in _this.addIncome) {
             this.incomeMonths += +this.addIncome[key];
         }
     }
 
     getAddExpenses() {
-        let addExpenses = addExpensesItem.value.split(',');
+        const addExpenses = addExpensesItem.value.split(',');
         const _this = this;
-        addExpenses.forEach((item) => {
+        addExpenses.forEach(item => {
             item = item.trim();
             if (item !== '') {
                 _this.addExpenses.push(item);
@@ -260,8 +270,8 @@ class AppData {
 
     getAddIncome() {
         const _this = this;
-        addIncomes.forEach((item) => {
-            let itemValue = item.value.trim();
+        additionalIncomes.forEach(item => {
+            const itemValue = item.value.trim();
             if (itemValue !== '') {
                 _this.addIncome.push(itemValue);
             }
@@ -269,7 +279,7 @@ class AppData {
     }
 
     getExpensesMonth() {
-        for (let key in this.expenses) {
+        for (const key in this.expenses) {
             this.expensesMonth += +this.expenses[key];
         }
         return this.expensesMonth;
