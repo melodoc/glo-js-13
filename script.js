@@ -64,12 +64,27 @@ const getShortDate = () => {
     return `${day}.${month}.${year} - ${hour}:${minute}:${second}`;
 };
 
+const createDateOnPage = () => {
+    const fullDate = document.createElement('p');
+    const shortDate = document.createElement('p');
 
-const fullDate = document.createElement('p');
-const shortDate = document.createElement('p');
+    fullDate.innerHTML = getFullDate();
+    shortDate.innerHTML = getShortDate();
 
-fullDate.innerHTML = getFullDate();
-shortDate.innerHTML = getShortDate();
+    document.body.appendChild(fullDate);
+    document.body.appendChild(shortDate);
+};
 
-document.body.appendChild(fullDate);
-document.body.appendChild(shortDate);
+const eraseDate = (callback) => {
+    setTimeout(() => {
+        document.body.innerHTML = '';
+        callback();
+    }, 1000);
+};
+
+const refreshDate = () => {
+    createDateOnPage();
+    eraseDate(refreshDate);
+};
+
+eraseDate(refreshDate);
