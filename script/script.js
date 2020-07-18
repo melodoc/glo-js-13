@@ -37,7 +37,8 @@ let expensesItems = document.querySelectorAll('.expenses-items'),
     expensesTitle = document.querySelector('.expenses-title');
 
 let incomeItems = document.querySelectorAll('.income-items'),
-    incomeTitle = document.querySelector('.income-title');
+    incomeTitle = document.querySelector('.income-title'),
+    incomeAmount = document.querySelector('.income-amount');
 
 const periodSelect = document.querySelector('.period-select'),
     periodAmount = document.querySelector('.period-amount'),
@@ -52,6 +53,8 @@ const itemExpenses = document.querySelector('.expenses-title').value,
     depositBank = document.querySelector('.deposit-bank'),
     depositAmount = document.querySelector('.deposit-amount'),
     depositPercent = document.querySelector('.deposit-percent');
+
+const accountData = document.querySelector('.data');
 
 window.onload = function () {
     startBtn.disabled = true;
@@ -166,6 +169,17 @@ class AppData {
             startBtn.disabled = false;
         }
     }
+
+    checkField(event) {
+        let target = event.target;
+        if (target.getAttribute('placeholder') === 'Сумма') {
+            target.value = target.value.replace(/[^0-9]/g, '');
+        }
+        if (target.getAttribute('placeholder') === 'Наименование') {
+            target.value = target.value.replace(/[^а-яА-ЯёЁ.,():"'|;\-]/g, '');
+        }
+    }
+
 
     showResult() {
         const _this = this;
@@ -381,6 +395,7 @@ class AppData {
         incomePlus.addEventListener('click', appData.addIncomeBlock);
         periodSelect.addEventListener('input', appData.rangeHandler);
         depositCheck.addEventListener('change', appData.depositHandler.bind(appData));
+        accountData.addEventListener('change', appData.checkField);
     }
 }
 
