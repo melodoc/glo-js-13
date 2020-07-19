@@ -38,7 +38,7 @@ class DomElement {
 }
 
 class SqareElement extends DomElement {
-    constructor(selector, height, width, bg, fontSize, position) {
+    constructor(selector, height, width, bg, fontSize, position, left = 0, top = 0) {
         super();
         this.selector = selector;
         this.height = height;
@@ -46,38 +46,17 @@ class SqareElement extends DomElement {
         this.bg = bg;
         this.fontSize = fontSize;
         this.position = position;
-        this.left = 0;
-        this.top = 0;
-    }
-
-    changeStyle() {
-        this.style.cssText = `
-        height: ${this.height};
-        width: ${this.width};
-        background: ${this.bg};
-        font-size: ${this.fontSize};
-        position: ${this.position};
-        left: ${this.left}px;
-        top: ${this.top}px;
-      `;
-        console.log('ddddd');
-    }
-
-    move(side) {
-        if (side === 'left') {
-            this.left -= 10;
-            this.changeStyle.apply(this);
-        }
+        this.left = left;
+        this.top = top;
     }
 }
 
-const div = new DomElement('.block', '50px', '100px', '#D7307C', '1.5em');
 const p = new DomElement('#best', '70px', '100px', '#A7E251', '1.5em');
 const divSqare = new SqareElement('.block', '100px', '100px', '#3461EB', '1.5em', 'absolute');
 
 //to check target
+
 setTimeout(() => {
-    div.setElement();
     p.setElement();
 }, 0);
 
@@ -86,20 +65,41 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 document.addEventListener('keydown', event => {
-
+    const div = document.querySelector('.block');
     const key = event.code;
 
+    let left = parseInt(div.style.left);
+    let top = parseInt(div.style.top);
+
+    if (!isNaN(div.style.left)) {
+        left = 0;
+    }
+
+    if (!isNaN(div.style.top)) {
+        top = 0;
+    }
     if (key === 'ArrowLeft') {
-        divSqare.move('left');
-        console.log('ArrowLeft');
+        if (key !== 'keyup') {
+            div.style.left = `${left - 10}px`;
+            left -= 10;
+        }
     }
     if (key === 'ArrowRight') {
-        console.log('ArrowRight');
+        if (key !== 'keyup') {
+            div.style.left = `${left + 10}px`;
+            left += 10;
+        }
     }
     if (key === 'ArrowUp') {
-        console.log('ArrowUp');
+        if (key !== 'keyup') {
+            div.style.top = `${top - 10}px`;
+            top -= 10;
+        }
     }
     if (key === 'ArrowDown') {
-        console.log('ArrowDown');
+        if (key !== 'keyup') {
+            div.style.top = `${top + 10}px`;
+            top += 10;
+        }
     }
 });
