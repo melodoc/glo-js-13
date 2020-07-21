@@ -1,42 +1,77 @@
-'use strict';
 
-let isNumber = function (number) {
+
+const isNumber = function(number) {
     return !isNaN(parseFloat(number)) && isFinite(number);
 };
 
-let randomInteger = function (min, max) {
-    let rand = Math.floor(min + Math.random() * (max + 1 - min));
+const randomInteger = function(min, max) {
+    const rand = Math.floor(min + Math.random() * (max + 1 - min));
     return rand;
 };
 
-let guessRandomNumber = function (generateNumberFunc) {
+const guessRandomNumber = function() {
 
-    let quizNumber = generateNumberFunc;
-    console.log(quizNumber);
+    const randomNumber = Math.floor(1 + Math.random() * 100);
+    console.log(randomNumber);
 
-    let checkQuizInput = function () {
-        let quizInput = prompt('Угадай чисто от 1 до 100', '100');
+    let attempts = 10;
 
-        if (quizInput === null) {
-            alert('До свидания!');
+    const checkuserInput = function() {
+        const userInput = prompt('Угадай чисто от 1 до 100', '100');
+        const quizFailed = 'Попытки закончились, хотите сыграть еще?';
+        const quizSucessed = 'Вы угадали число! Хотели бы сыграть еще?';
+
+        if (userInput === null) {
+            alert('До свидания! 1');
             return;
         }
 
-        if (!isNumber(quizInput)) {
+        if (!isNumber(userInput)) {
             alert('Вы ввели не число');
-        } else if (quizInput > quizNumber) {
-            alert('Загаданное число меньше');
-        } else if (quizInput < quizNumber) {
-            alert('Загаданное число больше');
-        } else if (quizInput == quizNumber) {
-            confirm('Вы угадали число');
-            return;
-        }               
-        checkQuizInput();
+        } else if (userInput > randomNumber) {
+            attempts--;
+            if (attempts <= 0) {
+                const isRepeatQuizFailed = confirm(quizFailed);
+                if (isRepeatQuizFailed) {
+                    attempts = 10;
+                    const quiz = guessRandomNumber();
+                    quiz();
+
+                } else {
+                    alert('До свидания! 2');
+                    return;
+                }
+            } alert(`Загаданное число меньше. Осталось попыток: ${attempts}`);
+        } else if (userInput < randomNumber) {
+            attempts--;
+            if (attempts <= 0) {
+                const isRepeatQuizFailed = confirm(quizFailed);
+                if (isRepeatQuizFailed) {
+                    const quiz = guessRandomNumber();
+                    quiz();
+
+                } else {
+                    alert('До свидания! 3');
+                    return;
+                }
+            } alert(`Загаданное число больше.Осталось попыток: ${attempts}`);
+        } else if (userInput == randomNumber) {
+            const isRepeatQuizSucessed = confirm(quizSucessed);
+            if (isRepeatQuizSucessed) {
+                attempts = 10;
+                const quiz = guessRandomNumber();
+                quiz();
+            } else {
+                alert('До свидания! 4');
+                return;
+            }
+        }
+        //return;
+        checkuserInput();
     };
 
-    return checkQuizInput;
+    return checkuserInput;
 };
 
-let quiz = guessRandomNumber(randomInteger(1, 100));
+const quiz = guessRandomNumber();
 quiz();
